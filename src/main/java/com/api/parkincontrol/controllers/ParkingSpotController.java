@@ -5,11 +5,15 @@ import com.api.parkincontrol.models.ParkingSpotModel;
 import com.api.parkincontrol.services.ParkingSpotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -38,6 +42,10 @@ public class ParkingSpotController {
           return ResponseEntity.status(HttpStatus.CREATED).body(parkingSpotService.save(parkingSpotModel));
      }
 
+     @GetMapping
+     public ResponseEntity<Page<ParkingSpotModel>> getAllParkingSpots(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+          return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll(pageable));
+     }
 
 
 }
