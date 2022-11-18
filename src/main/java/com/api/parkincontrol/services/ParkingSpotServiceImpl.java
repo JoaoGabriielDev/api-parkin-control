@@ -5,9 +5,9 @@ import com.api.parkincontrol.repositories.ParkingSpotRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.awt.print.Pageable;
+import java.util.Optional;
 
 
 @Service
@@ -35,5 +35,14 @@ public class ParkingSpotServiceImpl implements ParkingSpotService {
 
     public Page<ParkingSpotModel> findAll(Pageable pageable) {
         return parkingSpotRepository.findAll(pageable);
+    }
+
+    public Optional<ParkingSpotModel> findById(Long id){
+        return parkingSpotRepository.findById(id);
+    }
+
+    @Transactional
+    public void delete(ParkingSpotModel parkingSpotModel){
+        parkingSpotRepository.delete(parkingSpotModel);
     }
 }
